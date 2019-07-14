@@ -1,0 +1,4 @@
+include ':app'
+include ':common'
+
+enableFeaturePreview('GRADLE_METADATA')
