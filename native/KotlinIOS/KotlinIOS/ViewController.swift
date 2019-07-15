@@ -21,19 +21,11 @@ class ViewController: UIViewController {
         label.font = label.font.withSize(25)
         label.text = CommonKt.createApplicationScreenMessage()
         view.addSubview(label)
-        
-        let api = Api()
-        let request = api.getRandomPerson()
-        
-        RequestKt.executeCallback(request, onSuccess: { res in
-            let cast = res as! Person
-            label.text = cast.name
-        }, onError: { res in
-            
-        })
-        
+
+        Api()
+            .getRandomPerson()
+            .executeCallback(onSuccess: { label.text = $0?.name },
+                             onError: { _ in })
     }
-
-
 }
 

@@ -9,32 +9,32 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
-interface Request<T> {
-    suspend fun execute(): T
-}
+abstract class Request<T> {
+    abstract suspend fun execute(): T
 
-fun <T, R> Request<T>.map(f: (T) -> R): Request<R> = MapRequest(request = this, map = f)
+    fun executeCallback(
+        onSuccess: (T) -> Unit,
+        onError: (Throwable) -> Unit
+    ) {
+        GlobalScope.launch(ApplicationDispatcher) {
 
-fun <T> Request<T>.executeCallback(
-    onSuccess: (T) -> Unit,
-    onError: (Throwable) -> Unit
-) {
-    GlobalScope.launch(ApplicationDispatcher) {
-
-        try {
-            val result = execute()
-            onSuccess(result)
-        } catch (e: Exception) {
-            onError(e)
+            try {
+                val result = execute()
+                onSuccess(result)
+            } catch (e: Exception) {
+                onError(e)
+            }
         }
     }
 }
+
+fun <T, R> Request<T>.map(f: (T) -> R): Request<R> = MapRequest(request = this, map = f)
 
 internal sealed class KtorRequest<T>(
     open val client: HttpClient,
     open val uri: URLBuilder,
     private val serializer: KSerializer<T>
-) : Request<T> {
+) : Request<T>() {
 
     internal class Get<T>(
         client: HttpClient,
@@ -58,7 +58,7 @@ internal sealed class KtorRequest<T>(
 private class MapRequest<T, R>(
     private val request: Request<T>,
     private val map: (T) -> R
-) : Request<R> {
+) : Request<R>() {
 
     override suspend fun execute(): R = map(request.execute())
 }
