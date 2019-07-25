@@ -11,3 +11,7 @@
 /build
 /captures
 .externalNativeBuild
+common/build
+.idea
+native/KotlinIOS/KotlinIOS.xcodeproj/project.xcworkspace/xcuserdata
+native/KotlinIOS/KotlinIOS.xcodeproj/xcuserdata
