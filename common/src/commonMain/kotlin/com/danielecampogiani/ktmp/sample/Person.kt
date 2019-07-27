@@ -1,4 +1,4 @@
-package com.danielecampogiani.ktmp
+package com.danielecampogiani.ktmp.sample
 
 data class Person(
     val name: String,

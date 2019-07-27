@@ -1,5 +1,7 @@
-package com.danielecampogiani.ktmp
+package com.danielecampogiani.ktmp.sample
 
+import com.danielecampogiani.ktmp.Request
+import com.danielecampogiani.ktmp.ktor.KtorRequest
 import io.ktor.client.HttpClient
 import io.ktor.http.URLBuilder
 
