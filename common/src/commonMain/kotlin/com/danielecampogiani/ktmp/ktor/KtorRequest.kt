@@ -1,34 +1,12 @@
-package com.danielecampogiani.ktmp
+package com.danielecampogiani.ktmp.ktor
 
+import com.danielecampogiani.ktmp.Request
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.http.URLBuilder
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
-
-abstract class Request<T> {
-    abstract suspend fun execute(): T
-
-    fun executeCallback(
-        onSuccess: (T) -> Unit,
-        onError: (Throwable) -> Unit
-    ) {
-        GlobalScope.launch(ApplicationDispatcher) {
-
-            try {
-                val result = execute()
-                onSuccess(result)
-            } catch (e: Exception) {
-                onError(e)
-            }
-        }
-    }
-}
-
-fun <T, R> Request<T>.map(f: (T) -> R): Request<R> = MapRequest(request = this, map = f)
 
 internal sealed class KtorRequest<T>(
     open val client: HttpClient,
@@ -53,12 +31,4 @@ internal sealed class KtorRequest<T>(
     protected fun parseJson(result: String): T {
         return Json.nonstrict.parse(serializer, result)
     }
-}
-
-private class MapRequest<T, R>(
-    private val request: Request<T>,
-    private val map: (T) -> R
-) : Request<R>() {
-
-    override suspend fun execute(): R = map(request.execute())
 }
