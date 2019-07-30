@@ -9,6 +9,7 @@ before_script:
     - echo "export ANDROID_HOME=/usr/local/share/android-sdk" >> ~/.bash_profile
     - source ~/.bash_profile
     - touch ~/.android/repositories.cfg
+    - export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
     - sdkmanager --update
     - sdkmanager "platform-tools" "platforms;android-28"
     - chmod +x gradlew
