@@ -3,6 +3,7 @@ os:
 language: swift
 
 before_script:
+    - brew tap AdoptOpenJDK/openjdk
     - brew cask install adoptopenjdk8
     - brew cask install android-sdk
     - echo "export ANDROID_HOME=/usr/local/share/android-sdk" >> ~/.bash_profile
