@@ -1,15 +1,15 @@
 os:
   - osx
-language: android
-android:
-  components:
-    - tools
-    - platform-tools
-    - tools
-    - build-tools-28.0.3
-    - android-28
+language: swift
 
 before_script:
+    - brew cask install adoptopenjdk8
+    - brew cask install android-sdk
+    - echo "export ANDROID_HOME=/usr/local/share/android-sdk" >> ~/.bash_profile
+    - source ~/.bash_profile
+    - touch ~/.android/repositories.cfg
+    - sdkmanager --update
+    - sdkmanager "platform-tools" "platforms;android-28"
     - chmod +x gradlew
 
 script:
