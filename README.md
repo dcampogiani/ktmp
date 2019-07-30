@@ -6,11 +6,13 @@ Kotlin Multi Platform experiments
 Common:
 
     ./gradlew common:build
-    
+
 Android:
 
     ./gradlew app:testDebugUnitTest app:assembleDebug
 
 iOS:
 
-    please open a PR
+Open the XCode project in `native/KotlinIOS` and build it, there's a *Build Phase* script that will do the magic 🧞
+
+<kbd>Cmd</kbd> + <kbd>U</kbd> will run the tests
