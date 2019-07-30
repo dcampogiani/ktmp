@@ -1,5 +1,6 @@
+os:
+  - osx
 language: android
-dist: trusty
 android:
   components:
     - tools
