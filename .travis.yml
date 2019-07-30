@@ -11,7 +11,7 @@ before_script:
     - touch ~/.android/repositories.cfg
     - export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
     - sdkmanager --update
-    - sdkmanager "platform-tools" "platforms;android-28"
+    - yes | sdkmanager "platform-tools" "platforms;android-28"
     - chmod +x gradlew
 
 script:
