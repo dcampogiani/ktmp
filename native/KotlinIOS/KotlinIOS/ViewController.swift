@@ -23,8 +23,15 @@ class ViewController: UIViewController {
 
         Api()
             .getRandomPerson()
-            .executeCallback(onSuccess: { label.text = $0?.name },
-                             onError: { _ in })
+            .executeCallback(
+                onSuccess: {
+                    label.text = $0.fold(fe: { (error) -> String in
+                        return error.errorBody
+                    }, fs: { (success) -> String in
+                        return success.body.name
+                    }) as! String
+            },
+                onError: { _ in })
     }
 }
 

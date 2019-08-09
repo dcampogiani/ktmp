@@ -3,21 +3,21 @@ package com.danielecampogiani.ktmp
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-abstract class Request<T> {
-    abstract suspend fun execute(): T
+abstract class Request<T : Any> {
+    abstract suspend fun execute(): Response<T>
 
     fun executeCallback(
-        onSuccess: (T) -> Unit,
+        onSuccess: (Response<T>) -> Unit,
         onError: (Throwable) -> Unit
     ): Cancellation<T> = Cancellation(this, onSuccess, onError).also { it.start() }
 
-    fun <R> map(f: (T) -> R): Request<R> =
-        MapRequest(request = this, map = f)
+    fun <R : Any> map(f: (T) -> R): Request<R> =
+        MapRequest(request = this, f = f)
 }
 
-class Cancellation<T> internal constructor(
+class Cancellation<T : Any> internal constructor(
     private val request: Request<T>,
-    private var onSuccess: ((T) -> Unit)?,
+    private var onSuccess: ((Response<T>) -> Unit)?,
     private var onError: ((Throwable) -> Unit)?
 ) {
 
@@ -40,10 +40,10 @@ class Cancellation<T> internal constructor(
     }
 }
 
-private class MapRequest<T, R>(
+private class MapRequest<T : Any, R : Any>(
     private val request: Request<T>,
-    private val map: (T) -> R
+    private val f: (T) -> R
 ) : Request<R>() {
 
-    override suspend fun execute(): R = map(request.execute())
+    override suspend fun execute(): Response<R> = request.execute().map(f)
 }
