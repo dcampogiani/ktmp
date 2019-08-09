@@ -9,20 +9,35 @@ abstract class Request<T> {
     fun executeCallback(
         onSuccess: (T) -> Unit,
         onError: (Throwable) -> Unit
-    ) {
+    ): Cancellation<T> = Cancellation(this, onSuccess, onError).also { it.start() }
+
+    fun <R> map(f: (T) -> R): Request<R> =
+        MapRequest(request = this, map = f)
+}
+
+class Cancellation<T> internal constructor(
+    private val request: Request<T>,
+    private var onSuccess: ((T) -> Unit)?,
+    private var onError: ((Throwable) -> Unit)?
+) {
+
+    internal fun start() {
         GlobalScope.launch(ApplicationDispatcher) {
 
             try {
-                val result = execute()
-                onSuccess(result)
+                val result = request.execute()
+                onSuccess?.invoke(result)
             } catch (e: Exception) {
-                onError(e)
+                onError?.invoke(e)
             }
         }
     }
 
-    fun <R> map(f: (T) -> R): Request<R> =
-        MapRequest(request = this, map = f)
+    fun cancel() {
+        onSuccess = null
+        onError = null
+
+    }
 }
 
 private class MapRequest<T, R>(
