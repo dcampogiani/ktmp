@@ -11,7 +11,7 @@ sealed class Response<out A : Any> {
     }
 
     fun <B : Any> map(f: (A) -> B): Response<B> {
-        return flatMap { just(f(it)) }
+        return fold({ Error(it.errorBody, it.code) }, { Success(f(it.body), it.code) })
     }
 
     fun <B : Any> flatMap(f: (A) -> Response<B>): Response<B> = fold({ Error(it.errorBody, it.code) }, { f(it.body) })
