@@ -4,8 +4,9 @@ import com.danielecampogiani.ktmp.Request
 import com.danielecampogiani.ktmp.ktor.KtorRequest
 import io.ktor.client.HttpClient
 import io.ktor.http.URLBuilder
+import kotlinx.serialization.list
 
-public class Api() {
+class Api {
 
     private val httpClient = HttpClient()
 
@@ -21,5 +22,13 @@ public class Api() {
             val name = firstPerson.name
             Person(name.first, name.last, firstPerson.email)
         }
+    }
+
+    fun getStargazers(owner: String, repo: String): Request<List<Stargazer>> {
+        return KtorRequest.Get(
+            httpClient,
+            URLBuilder("https://api.github.com/repos/$owner/$repo/stargazers"),
+            Stargazer.serializer().list
+        )
     }
 }

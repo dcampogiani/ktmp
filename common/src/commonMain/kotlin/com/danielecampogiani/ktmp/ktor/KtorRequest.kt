@@ -1,9 +1,11 @@
 package com.danielecampogiani.ktmp.ktor
 
+import com.danielecampogiani.ktmp.Error
 import com.danielecampogiani.ktmp.Request
 import com.danielecampogiani.ktmp.Response
 import com.danielecampogiani.ktmp.Success
 import io.ktor.client.HttpClient
+import io.ktor.client.features.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.client.response.HttpResponse
@@ -25,11 +27,18 @@ internal sealed class KtorRequest<T : Any>(
     ) : KtorRequest<T>(client, uri, serializer) {
 
         override suspend fun execute(): Response<T> {
-            val httpResponse = client.get<HttpResponse> {
-                url(uri.buildString())
+            return try {
+
+                val httpResponse = client.get<HttpResponse> {
+                    url(uri.buildString())
+                }
+                val body = parseJson(httpResponse.readText())
+                Success(body, httpResponse.status.value)
+
+            } catch (e: ClientRequestException) {
+                val response = e.response
+                Error(response.readText(), response.status.value)
             }
-            val body = parseJson(httpResponse.readText())
-            return Success(body, httpResponse.status.value)
         }
     }
 
