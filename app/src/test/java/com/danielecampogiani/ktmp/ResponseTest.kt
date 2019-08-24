@@ -1,12 +1,15 @@
 package com.danielecampogiani.ktmp
 
+import com.danielecampogiani.ktmp.category.IntegrationTest
 import com.danielecampogiani.ktmp.sample.Api
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Test
+import org.junit.experimental.categories.Category
 
 
+@Category(IntegrationTest::class)
 class ResponseTest {
 
     private val api = Api()
