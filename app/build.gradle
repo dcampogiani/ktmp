@@ -23,6 +23,16 @@ android {
     packagingOptions {
         exclude 'META-INF/*'
     }
+
+    testOptions {
+        unitTests.all {
+
+            useJUnit {
+                includeCategories 'com.danielecampogiani.ktmp.category.UnitTest'
+                excludeCategories 'com.danielecampogiani.ktmp.category.IntegrationTest'
+            }
+        }
+    }
 }
 
 dependencies {

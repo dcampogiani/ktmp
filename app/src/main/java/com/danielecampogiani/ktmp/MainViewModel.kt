@@ -25,7 +25,12 @@ class MainViewModel : ViewModel() {
             runCatching {
                 api.getRandomPerson().execute()
             }.fold(
-                { mutableState.value = MainState.Result(it) },
+                { response ->
+                    mutableState.value = response.fold(
+                        { error -> MainState.Error(error.errorBody) },
+                        { success -> MainState.Result(success.body) }
+                    )
+                },
                 { mutableState.value = MainState.Error(it.message.orEmpty()) }
             )
         }
