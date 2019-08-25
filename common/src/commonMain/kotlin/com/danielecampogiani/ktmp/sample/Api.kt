@@ -31,4 +31,20 @@ class Api {
             Stargazer.serializer().list
         )
     }
+
+    fun getUser(userName: String): Request<User> {
+        return KtorRequest.Get(
+            httpClient,
+            URLBuilder("https://api.github.com/users/$userName"),
+            User.serializer()
+        )
+    }
+
+    fun getFollowers(url: String): Request<List<User>> {
+        return KtorRequest.Get(
+            httpClient,
+            URLBuilder(url),
+            User.serializer().list
+        )
+    }
 }

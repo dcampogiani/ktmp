@@ -23,7 +23,8 @@ class MainViewModel : ViewModel() {
     private fun loadData() {
         viewModelScope.launch {
             runCatching {
-                api.getRandomPerson().execute()
+                api.getUser("dcampogiani")
+                    .flatMap { api.getFollowers(it.followersUrl) }.execute()
             }.fold(
                 { response ->
                     mutableState.value = response.fold(
