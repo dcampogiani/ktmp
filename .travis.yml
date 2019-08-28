@@ -1,6 +1,7 @@
 os: osx
 osx_image: xcode10.3
-xcode_project: native/KotlinIOS/KotlinIOS.xcodeproj
+xcode_project: "native/KotlinIOS/KotlinIOS.xcodeproj"
+xcode_scheme: KotlinIOS
 xcode_destination: platform=iOS Simulator,OS=12.4,name=iPhone XR
 language: swift
 
