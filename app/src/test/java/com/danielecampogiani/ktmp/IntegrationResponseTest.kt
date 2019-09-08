@@ -10,7 +10,7 @@ import org.junit.experimental.categories.Category
 
 
 @Category(IntegrationTest::class)
-class ResponseTest {
+class IntegrationResponseTest {
 
     private val api = Api()
 

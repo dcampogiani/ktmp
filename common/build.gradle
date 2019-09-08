@@ -18,8 +18,8 @@ kotlin {
     def serializer_version = "0.11.1"
 
     targets {
-        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")    \
-                                 ? presets.iosArm64 : presets.iosX64
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")      \
+                                   ? presets.iosArm64 : presets.iosX64
 
         fromPreset(iOSTarget, 'ios') {
             binaries {
@@ -38,6 +38,7 @@ kotlin {
             implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutine_version"
             implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serializer_version"
             implementation "io.ktor:ktor-client-core:$ktor_version"
+            implementation "io.ktor:ktor-client-logging:$ktor_version"
         }
 
         androidMain.dependencies {
@@ -46,6 +47,7 @@ kotlin {
             implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
             implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serializer_version"
             implementation "io.ktor:ktor-client-android:$ktor_version"
+            implementation "io.ktor:ktor-client-logging-jvm:$ktor_version"
         }
 
         iosMain {
@@ -53,6 +55,7 @@ kotlin {
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutine_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serializer_version"
                 implementation "io.ktor:ktor-client-ios:$ktor_version"
+                implementation "io.ktor:ktor-client-logging-native:$ktor_version"
             }
 
         }
