@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B65E7E982316E7DD00D15138 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65E7E972316E7DD00D15138 /* MainPresenter.swift */; };
+		B65E7E9A2316E7E700D15138 /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65E7E992316E7E700D15138 /* MainProtocols.swift */; };
+		B65E7E9C2316E86A00D15138 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65E7E9B2316E86A00D15138 /* MainViewController.swift */; };
 		DEE1E14822D680E2002F3437 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1E14722D680E2002F3437 /* AppDelegate.swift */; };
-		DEE1E14A22D680E2002F3437 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1E14922D680E2002F3437 /* ViewController.swift */; };
 		DEE1E14D22D680E2002F3437 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEE1E14B22D680E2002F3437 /* Main.storyboard */; };
 		DEE1E14F22D68117002F3437 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEE1E14E22D68117002F3437 /* Assets.xcassets */; };
 		DEE1E15222D68117002F3437 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEE1E15022D68117002F3437 /* LaunchScreen.storyboard */; };
@@ -50,9 +52,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B65E7E972316E7DD00D15138 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		B65E7E992316E7E700D15138 /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
+		B65E7E9B2316E86A00D15138 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		DEE1E14422D680E2002F3437 /* KotlinIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE1E14722D680E2002F3437 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DEE1E14922D680E2002F3437 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DEE1E14C22D680E2002F3437 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DEE1E14E22D68117002F3437 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEE1E15122D68117002F3437 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -92,6 +96,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B65E7E962316E7C700D15138 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				B65E7E9B2316E86A00D15138 /* MainViewController.swift */,
+				B65E7E972316E7DD00D15138 /* MainPresenter.swift */,
+				B65E7E992316E7E700D15138 /* MainProtocols.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		DEE1E13B22D680E1002F3437 = {
 			isa = PBXGroup;
 			children = (
@@ -116,8 +130,8 @@
 		DEE1E14622D680E2002F3437 /* KotlinIOS */ = {
 			isa = PBXGroup;
 			children = (
+				B65E7E962316E7C700D15138 /* Main */,
 				DEE1E14722D680E2002F3437 /* AppDelegate.swift */,
-				DEE1E14922D680E2002F3437 /* ViewController.swift */,
 				DEE1E14B22D680E2002F3437 /* Main.storyboard */,
 				DEE1E14E22D68117002F3437 /* Assets.xcassets */,
 				DEE1E15022D68117002F3437 /* LaunchScreen.storyboard */,
@@ -297,8 +311,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEE1E14A22D680E2002F3437 /* ViewController.swift in Sources */,
+				B65E7E9A2316E7E700D15138 /* MainProtocols.swift in Sources */,
+				B65E7E982316E7DD00D15138 /* MainPresenter.swift in Sources */,
 				DEE1E14822D680E2002F3437 /* AppDelegate.swift in Sources */,
+				B65E7E9C2316E86A00D15138 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

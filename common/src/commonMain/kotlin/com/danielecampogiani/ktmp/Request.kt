@@ -13,6 +13,9 @@ abstract class Request<T : Any> {
 
     fun <R : Any> map(f: (T) -> R): Request<R> =
         MapRequest(request = this, f = f)
+
+    fun <R : Any> flatMap(f: (T) -> Request<R>): Request<R> =
+        FlatMapRequest(request = this, f = f)
 }
 
 class Cancellation<T : Any> internal constructor(
@@ -46,4 +49,17 @@ private class MapRequest<T : Any, R : Any>(
 ) : Request<R>() {
 
     override suspend fun execute(): Response<R> = request.execute().map(f)
+}
+
+private class FlatMapRequest<T : Any, R : Any>(
+    private val request: Request<T>,
+    private val f: (T) -> Request<R>
+) : Request<R>() {
+    override suspend fun execute(): Response<R> {
+        return when (val firstResponse = request.execute()) {
+            is Success -> f(firstResponse.body).execute()
+            is Error -> Error(firstResponse.errorBody, firstResponse.code)
+        }
+    }
+
 }
