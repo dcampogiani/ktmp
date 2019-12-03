@@ -24,8 +24,8 @@ matrix:
             script:
                 - ./gradlew common:build --console plain
                 - ./gradlew app:testDebugUnitTest app:assembleDebug --console plain
-        - osx_image: xcode11.2
-            language: swift
+        - language: swift
+            osx_image: xcode11.2
             xcode_project: "native/KotlinIOS/KotlinIOS.xcodeproj"
             xcode_scheme: KotlinIOS
             xcode_destination: platform=iOS Simulator,OS=12.4,name=iPhone XR
