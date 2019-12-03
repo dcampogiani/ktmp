@@ -1,23 +1,34 @@
 matrix:
-    include:
-        - language: swift
-            osx_image: xcode11.2
-            xcode_project: "native/KotlinIOS/KotlinIOS.xcodeproj"
-            xcode_scheme: KotlinIOS
-            xcode_destination: platform=iOS Simulator,OS=12.4,name=iPhone XR
-            
-            script:
-                - ./gradlew common:build --console plain
-                - xcodebuild clean test -quiet
-
-            after_failure:
-                - cat xcodebuild.log
-
-            before_cache:
-                - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-                - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-            cache:
-                directories:
-                    - $HOME/.gradle/caches/
-                    - $HOME/.gradle/wrapper/
-                    - $HOME/.android/build-cache
+  include:
+    - language: android
+      os: osx
+      jdk: oraclejdk8
+      android:
+        components:
+          - tools
+          - platform-tools
+          - build-tools-28.0.3
+          - android-28
+      before_script:
+        - cd android/AppName
+      script:
+        - ./gradlew common:build --console plain
+        - ./gradlew app:testDebugUnitTest app:assembleDebug --console plain
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      cache:
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.android/build-cache
+    - language: swift
+      os: osx
+      osx_image: xcode11.2
+      before_script:
+        - cd native/KotlinIOS
+      script:
+        - ./gradlew common:build --console plain
+        - xcodebuild -project KotlinIOS.xcodeproj -scheme KotlinIOS -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.4'
+      after_failure:
+        - cat xcodebuild.log
