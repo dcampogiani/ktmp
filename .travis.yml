@@ -1,5 +1,5 @@
 os: osx
-matrix:
+jobs:
     include:
         - language: android
             android:
