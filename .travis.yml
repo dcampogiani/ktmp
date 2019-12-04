@@ -2,12 +2,6 @@ matrix:
   include:
     - language: android
       os: osx
-      android:
-        components:
-          - tools
-          - platform-tools
-          - build-tools-28.0.3
-          - android-28
       before_script:
           - brew tap AdoptOpenJDK/openjdk
           - brew cask install adoptopenjdk8
