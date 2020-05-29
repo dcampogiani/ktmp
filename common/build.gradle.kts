@@ -26,6 +26,7 @@ kotlin {
             binaries {
                 framework {
                     baseName = "common"
+                    freeCompilerArgs = listOf("-Xobjc-generics")
                 }
             }
         }
