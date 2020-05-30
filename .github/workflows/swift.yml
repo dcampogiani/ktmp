@@ -19,5 +19,5 @@ jobs:
         swift build -v
     - name: Run tests
       run: |
-      cd native/KotlinIOS
-      swift test -v
+        cd native/KotlinIOS
+        swift test -v
