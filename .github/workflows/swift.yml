@@ -20,7 +20,7 @@ jobs:
         xcodebuild \
           -project KotlinIOS.xcodeproj \
           -scheme KotlinIOS \
-          -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.4'
+          -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.4.1'
     - name: Run tests
       run: |
         ./gradlew common:build --console plain
