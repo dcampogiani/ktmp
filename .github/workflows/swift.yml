@@ -15,9 +15,18 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build
       run: |
+        ./gradlew common:build --console plain
         cd native/KotlinIOS
-        swift build -v
+        xcodebuild \
+          -project KotlinIOS.xcodeproj \
+          -scheme KotlinIOS \
+          -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.4'
     - name: Run tests
       run: |
+        ./gradlew common:build --console plain
         cd native/KotlinIOS
-        swift test -v
+        xcodebuild \
+          -project KotlinIOS.xcodeproj \
+          -scheme KotlinIOS \
+          -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.4' \
+          test | xcpretty --test --color
