@@ -1,21 +1,9 @@
 matrix:
   include:
     - language: android
-      os: osx
-      before_script:
-          - brew tap AdoptOpenJDK/openjdk
-          - brew cask install adoptopenjdk8
-          - brew cask install android-sdk
-          - echo "export ANDROID_HOME=/usr/local/share/android-sdk" >> ~/.bash_profile
-          - source ~/.bash_profile
-          - touch ~/.android/repositories.cfg
-          - export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
-          - sdkmanager --update
-          - yes | sdkmanager "platform-tools" "platforms;android-28" > /dev/null
-          - chmod +x gradlew
+      dist: trusty
       script:
-        - ./gradlew common:build --console plain
-        - ./gradlew app:testDebugUnitTest app:assembleDebug --console plain
+        - ./gradlew common:build app:testDebugUnitTest app:assembleDebug --console plain
       before_cache:
         - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
         - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -26,11 +14,14 @@ matrix:
           - $HOME/.android/build-cache
     - language: swift
       os: osx
-      osx_image: xcode11.2
-      before_script:
-        - cd native/KotlinIOS
+      osx_image: xcode11.3.1
       script:
         - ./gradlew common:build --console plain
-        - xcodebuild -project KotlinIOS.xcodeproj -scheme KotlinIOS -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.4'
+        - cd native/KotlinIOS
+        - xcodebuild \
+          -project KotlinIOS.xcodeproj \
+          -scheme KotlinIOS \
+          -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.4.1' \
+          test | xcpretty --test --color
       after_failure:
         - cat xcodebuild.log
