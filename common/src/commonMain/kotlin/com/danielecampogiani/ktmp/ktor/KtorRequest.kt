@@ -8,8 +8,9 @@ import io.ktor.client.HttpClient
 import io.ktor.client.features.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.client.request.url
-import io.ktor.client.response.HttpResponse
 import io.ktor.client.response.readText
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.readText
 import io.ktor.http.URLBuilder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
