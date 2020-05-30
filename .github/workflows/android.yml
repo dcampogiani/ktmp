@@ -19,6 +19,4 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run:
-        ./gradlew common:build --console plain
-        ./gradlew build
-        ./gradlew app:testDebugUnitTest app:assembleDebug --console plain
+        ./gradlew common:build app:testDebugUnitTest app:assembleDebug --console plain
