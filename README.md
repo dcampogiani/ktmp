@@ -1,4 +1,4 @@
-# ktmp
+# ktmp-exp [![Build Status](https://travis-ci.com/dcampogiani/ktmp.svg?branch=master)](https://travis-ci.com/dcampogiani/ktmp)
 Kotlin Multi Platform experiments
 
 
@@ -13,6 +13,8 @@ Android:
 
 iOS:
 
-Open the XCode project in `native/KotlinIOS` and build it, there's a *Build Phase* script that will do the magic 🧞
+Open the Xcode project in `native/KotlinIOS`, there's a *Build Phase* script that will do the magic. 🧞
 
-<kbd>Cmd</kbd> + <kbd>U</kbd> will run the tests
+<kbd>Cmd</kbd> + <kbd>B</kbd> to build
+<br>
+<kbd>Cmd</kbd> + <kbd>U</kbd> to run tests

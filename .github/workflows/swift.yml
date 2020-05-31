@@ -1,0 +1,32 @@
+name: Swift
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: |
+        ./gradlew common:build --console plain
+        cd native/KotlinIOS
+        xcodebuild \
+          -project KotlinIOS.xcodeproj \
+          -scheme KotlinIOS \
+          -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.4.1'
+    - name: Run tests
+      run: |
+        ./gradlew common:build --console plain
+        cd native/KotlinIOS
+        xcodebuild \
+          -project KotlinIOS.xcodeproj \
+          -scheme KotlinIOS \
+          -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.4.1' \
+          test | xcpretty --test --color

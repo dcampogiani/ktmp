@@ -1,29 +1,40 @@
-os:
-  - osx
-language: swift
-
-before_script:
-    - brew tap AdoptOpenJDK/openjdk
-    - brew cask install adoptopenjdk8
-    - brew cask install android-sdk
-    - echo "export ANDROID_HOME=/usr/local/share/android-sdk" >> ~/.bash_profile
-    - source ~/.bash_profile
-    - touch ~/.android/repositories.cfg
-    - export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
-    - sdkmanager --update
-    - yes | sdkmanager "platform-tools" "platforms;android-28" > /dev/null
-    - chmod +x gradlew
-
-script:
-    - ./gradlew common:build --console plain
-    - ./gradlew app:testDebugUnitTest app:assembleDebug --console plain
-
-
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
+matrix:
+  include:
+    - language: android
+      os: linux
+      jdk: oraclejdk8
+      android:
+        components:
+          - tools
+          - platform-tools
+          - build-tools-29.0.3
+          - android-29
+      before_install:
+        - yes | sdkmanager tools
+      before_script:
+        - chmod +x gradlew
+      script:
+        - ./gradlew common:build --no-daemon --console plain
+        - ./gradlew app:testDebugUnitTest app:assembleDebug --no-daemon --console plain
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      cache:
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.android/build-cache
+    - language: swift
+      os: osx
+      osx_image: xcode11.5
+      xcode_project: native/KotlinIOS/KotlinIOS.xcodeproj
+      xcode_scheme: KotlinIOS
+      xcode_destination: platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.4.1
+      script:
+        - ./gradlew common:build --console plain
+        - xcodebuild \
+          clean \
+          build \
+          test | xcpretty --test --color
+      after_failure:
+        - cat xcodebuild.log

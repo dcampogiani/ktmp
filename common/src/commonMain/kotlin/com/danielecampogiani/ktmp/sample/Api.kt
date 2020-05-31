@@ -8,6 +8,7 @@ import io.ktor.client.features.logging.Logger
 import io.ktor.client.features.logging.Logging
 import io.ktor.client.features.logging.SIMPLE
 import io.ktor.http.URLBuilder
+import kotlinx.serialization.builtins.list
 import kotlinx.serialization.list
 
 class Api {
