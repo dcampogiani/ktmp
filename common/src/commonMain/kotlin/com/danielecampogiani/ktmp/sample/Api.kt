@@ -3,12 +3,21 @@ package com.danielecampogiani.ktmp.sample
 import com.danielecampogiani.ktmp.Request
 import com.danielecampogiani.ktmp.ktor.KtorRequest
 import io.ktor.client.HttpClient
+import io.ktor.client.features.logging.LogLevel
+import io.ktor.client.features.logging.Logger
+import io.ktor.client.features.logging.Logging
+import io.ktor.client.features.logging.SIMPLE
 import io.ktor.http.URLBuilder
 import kotlinx.serialization.list
 
 class Api {
 
-    private val httpClient = HttpClient()
+    private val httpClient = HttpClient {
+        install(Logging) {
+            logger = Logger.SIMPLE
+            level = LogLevel.ALL
+        }
+    }
 
 
     fun getRandomPerson(): Request<Person> {

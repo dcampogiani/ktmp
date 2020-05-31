@@ -14,7 +14,8 @@ sealed class Response<out A : Any> {
         return fold({ Error(it.errorBody, it.code) }, { Success(f(it.body), it.code) })
     }
 
-    fun <B : Any> flatMap(f: (A) -> Response<B>): Response<B> = fold({ Error(it.errorBody, it.code) }, { f(it.body) })
+    fun <B : Any> flatMap(f: (A) -> Response<B>): Response<B> =
+        fold({ Error(it.errorBody, it.code) }, { f(it.body) })
 
     companion object {
         fun <A : Any> just(value: A): Response<A> {
@@ -22,6 +23,32 @@ sealed class Response<out A : Any> {
                 value,
                 200
             )
+        }
+
+        fun <A : Any> error(errorBody: String): Response<A> {
+            return Error(
+                errorBody,
+                500
+            )
+        }
+
+        fun <T : Any, R : Any, O : Any> zip(
+            a: Response<T>,
+            b: Response<R>,
+            zipFun: (T, R) -> O
+        ): Response<O> {
+            return a.fold(fe = { errorA ->
+                Error(errorA.errorBody, errorA.code)
+            }, fs = { successA ->
+                b.fold(
+                    fe = { errorB ->
+                        Error(errorB.errorBody, errorB.code)
+                    },
+                    fs = { successB ->
+                        Success(zipFun(successA.body, successB.body), successA.code)
+                    }
+                )
+            })
         }
     }
 }
