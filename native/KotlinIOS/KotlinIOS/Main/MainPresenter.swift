@@ -13,9 +13,14 @@ struct MainPresenter: MainPresenterProtocol {
         api
             .getUser(userName: "gioevi90")
             .flatMap(f: { self.api.getFollowers(url: $0.followersUrl) as! Request<AnyObject> })
-            .executeCallback(onSuccess: { $0.fold(fe: { error in self.onFetchFollowersError(error: error.errorBody) },
-                                                  fs: { success in self.onFetchFollowersSuccess(followers: success.body) }) },
-                             onError: { self.onFetchFollowersError(error: $0.message ?? "")  })
+            .execute{ result, error in
+               if let e = error {
+                self.onFetchFollowersError(error: e.localizedDescription )
+               } else if let res = result{
+                res.fold(fe: { error in self.onFetchFollowersError(error: error.errorBody) },
+                fs: { success in self.onFetchFollowersSuccess(followers: success.body) })
+               }
+            }
     }
 
     func onFetchFollowersSuccess(followers: AnyObject) {
