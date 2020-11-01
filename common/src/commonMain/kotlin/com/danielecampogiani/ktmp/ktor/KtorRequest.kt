@@ -21,6 +21,13 @@ internal sealed class KtorRequest<T : Any>(
     private val serializer: KSerializer<T>
 ) : Request<T>() {
 
+    private val jsonConfig = Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+        allowSpecialFloatingPointValues = true
+        prettyPrint = true
+    }
+
     internal class Get<T : Any>(
         client: HttpClient,
         uri: URLBuilder,
@@ -44,6 +51,6 @@ internal sealed class KtorRequest<T : Any>(
     }
 
     protected fun parseJson(result: String): T {
-        return Json.nonstrict.parse(serializer, result)
+        return jsonConfig.decodeFromString(serializer, result)
     }
 }

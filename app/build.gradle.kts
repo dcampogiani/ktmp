@@ -1,16 +1,26 @@
 plugins {
-  id("com.android.application")
-  id("kotlin-android")
-  id("kotlin-android-extensions")
-  id("kotlin-kapt")
+    id("com.android.application")
+    kotlin("android")
+    id("kotlin-android-extensions")
+    id("kotlin-android")
+}
+
+group = "com.danielecampogiani.ktmp"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    gradlePluginPortal()
+    google()
+    jcenter()
+    mavenCentral()
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
     defaultConfig {
         applicationId = "com.danielecampogiani.ktmp"
         minSdkVersion(21)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -19,8 +29,19 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     packagingOptions {
@@ -28,30 +49,27 @@ android {
     }
 
     testOptions {
-        unitTests.all(KotlinClosure1<Any, Test>({
-            (this as Test).also {
-                useJUnit {
-                    includeCategories("com.danielecampogiani.ktmp.category.UnitTest")
-                    excludeCategories("com.danielecampogiani.ktmp.category.IntegrationTest")
-                }
+        unitTests.all {
+            it.useJUnit {
+                includeCategories("com.danielecampogiani.ktmp.category.UnitTest")
+                excludeCategories("com.danielecampogiani.ktmp.category.IntegrationTest")
             }
-        }, unitTests))
+        }
     }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":common"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.3.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.core:core-ktx:1.3.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-    kapt("androidx.lifecycle:lifecycle-compiler:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.2.0")
 
-    testImplementation("junit:junit:4.13")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    testImplementation("junit:junit:4.13.1")
+    androidTestImplementation("androidx.test:runner:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 }

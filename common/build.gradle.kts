@@ -1,126 +1,103 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.3.72"))
-        classpath(kotlin("serialization", version = "1.3.72"))
-    }
-}
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.3.70"
+    kotlin("plugin.serialization") version "1.4.10"
+}
+
+group = "com.danielecampogiani.ktmp"
+version = "1.0-SNAPSHOT"
+
+val ktorVer = "1.4.1"
+val coroutinesVer = "1.3.8"
+val serializationVer = "1.0.1"
+
+repositories {
+    gradlePluginPortal()
+    google()
+    jcenter()
+    mavenCentral()
 }
 
 kotlin {
-    targets {
-        //select iOS target platform depending on the Xcode environment variables
-        val iOSTarget: (String, org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget.() -> Unit) -> org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget =
-            if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-                ::iosArm64
-            else
-                ::iosX64
-
-        iOSTarget("ios") {
-            binaries {
-                framework {
-                    baseName = "common"
-                    freeCompilerArgs = listOf("-Xobjc-generics")
-                }
+    jvm("android")
+    ios {
+        binaries {
+            framework {
+                baseName = "common"
             }
         }
-
-        jvm("android")
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                // Kotlin
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72")
-
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.7")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVer")
 
                 // Ktor
-                implementation("io.ktor:ktor-client-core:1.3.2")
-                implementation("io.ktor:ktor-client-json:1.3.2")
-                implementation("io.ktor:ktor-client-logging:1.3.2")
-                implementation("io.ktor:ktor-client-serialization:1.3.2")
-                implementation("io.ktor:ktor-serialization:1.3.2")
+                implementation("io.ktor:ktor-client-core:$ktorVer")
+                implementation("io.ktor:ktor-client-json:$ktorVer")
+                implementation("io.ktor:ktor-client-logging:$ktorVer")
+                implementation("io.ktor:ktor-client-serialization:$ktorVer")
 
                 // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVer")
+            }
+        }
+
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                implementation("io.mockk:mockk:1.10.2")
+
             }
         }
 
         val androidMain by getting {
             dependencies {
-                // Kotlin
-                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.72")
-
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVer")
 
                 // Ktor
-                implementation("io.ktor:ktor-client-android:1.3.2")
-                implementation("io.ktor:ktor-client-core-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-json-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-logging-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-serialization-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-android:$ktorVer")
+                implementation("io.ktor:ktor-client-core-jvm:$ktorVer")
+                implementation("io.ktor:ktor-client-json-jvm:$ktorVer")
+                implementation("io.ktor:ktor-client-logging-jvm:$ktorVer")
+                implementation("io.ktor:ktor-client-serialization-jvm:$ktorVer")
+            }
+        }
 
-                // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+        val androidTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation("junit:junit:4.13.1")
             }
         }
 
         val iosMain by getting {
             dependencies {
-                // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.7")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutinesVer")
 
-                // Ktor
-                implementation("io.ktor:ktor-client-ios:1.3.2")
-                implementation("io.ktor:ktor-client-core-native:1.3.2")
-                implementation("io.ktor:ktor-client-json-native:1.3.2")
-                implementation("io.ktor:ktor-client-logging-native:1.3.2")
-                implementation("io.ktor:ktor-client-serialization-native:1.3.2")
-
-                // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
-
+                implementation("io.ktor:ktor-client-ios:$ktorVer")
             }
         }
+        val iosTest by getting
     }
 }
 
 val packForXcode by tasks.creating(Sync::class) {
-    val targetDir = File(buildDir, "xcode-frameworks")
-
-    /// selecting the right configuration for the iOS
-    /// framework depending on the environment
-    /// variables set by Xcode build
+    group = "build"
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val framework = kotlin.targets
-        .getByName<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget>("ios")
-        .binaries.getFramework(mode)
+    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
+    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
+    val framework =
+        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
     inputs.property("mode", mode)
     dependsOn(framework.linkTask)
-
+    val targetDir = File(buildDir, "xcode-frameworks")
     from({ framework.outputDirectory })
     into(targetDir)
-
-    /// generate a helpful ./gradlew wrapper with embedded Java path
-    doLast {
-        val gradlew = File(targetDir, "gradlew")
-        gradlew.writeText("#!/bin/bash\n"
-                + "export 'JAVA_HOME=${System.getProperty("java.home")}'\n"
-                + "cd '${rootProject.rootDir}'\n"
-                + "./gradlew \$@\n")
-        gradlew.setExecutable(true)
-    }
 }
-
 tasks.getByName("build").dependsOn(packForXcode)

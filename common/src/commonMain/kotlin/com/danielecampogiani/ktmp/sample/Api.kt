@@ -8,8 +8,7 @@ import io.ktor.client.features.logging.Logger
 import io.ktor.client.features.logging.Logging
 import io.ktor.client.features.logging.SIMPLE
 import io.ktor.http.URLBuilder
-import kotlinx.serialization.builtins.list
-import kotlinx.serialization.list
+import kotlinx.serialization.builtins.ListSerializer
 
 class Api {
 
@@ -38,7 +37,7 @@ class Api {
         return KtorRequest.Get(
             httpClient,
             URLBuilder("https://api.github.com/repos/$owner/$repo/stargazers"),
-            Stargazer.serializer().list
+            ListSerializer(Stargazer.serializer())
         )
     }
 
@@ -54,7 +53,7 @@ class Api {
         return KtorRequest.Get(
             httpClient,
             URLBuilder(url),
-            User.serializer().list
+            ListSerializer(User.serializer())
         )
     }
 }
