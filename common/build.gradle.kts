@@ -45,7 +45,7 @@ kotlin {
 
                 // Ktor
                 implementation("io.ktor:ktor-client-core:1.3.2")
-                implementation("io.ktor:ktor-client-json:1.3.2")
+                implementation("io.ktor:ktor-client-json:1.4.1")
                 implementation("io.ktor:ktor-client-logging:1.3.2")
                 implementation("io.ktor:ktor-client-serialization:1.3.2")
                 implementation("io.ktor:ktor-serialization:1.3.2")
