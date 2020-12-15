@@ -79,7 +79,7 @@ kotlin {
         val iosMain by getting {
             dependencies {
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.7")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.8")
 
                 // Ktor
                 implementation("io.ktor:ktor-client-ios:1.3.2")
