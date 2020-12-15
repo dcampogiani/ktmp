@@ -66,7 +66,7 @@ kotlin {
 
                 // Ktor
                 implementation("io.ktor:ktor-client-android:1.3.2")
-                implementation("io.ktor:ktor-client-core-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-core-jvm:1.4.1")
                 implementation("io.ktor:ktor-client-json-jvm:1.3.2")
                 implementation("io.ktor:ktor-client-logging-jvm:1.3.2")
                 implementation("io.ktor:ktor-client-serialization-jvm:1.3.2")
