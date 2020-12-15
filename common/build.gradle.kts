@@ -51,7 +51,7 @@ kotlin {
                 implementation("io.ktor:ktor-serialization:1.3.2")
 
                 // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0-1.4.0-dev-5730")
             }
         }
 
