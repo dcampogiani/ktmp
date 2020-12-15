@@ -38,7 +38,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 // Kotlin
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.4.21")
 
                 // Coroutines
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.7")
