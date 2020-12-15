@@ -41,7 +41,7 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.3.72")
 
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.7")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.8")
 
                 // Ktor
                 implementation("io.ktor:ktor-client-core:1.3.2")
