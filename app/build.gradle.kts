@@ -67,7 +67,7 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.3.0")
 
     testImplementation("junit:junit:4.13.1")
     androidTestImplementation("androidx.test:runner:1.3.0")
