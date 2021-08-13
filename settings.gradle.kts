@@ -18,4 +18,3 @@ rootProject.name = "ktmp"
 
 include(":app")
 include(":common")
-enableFeaturePreview("GRADLE_METADATA")
