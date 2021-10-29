@@ -16,7 +16,7 @@ repositories {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdkVersion(31)
     defaultConfig {
         applicationId = "com.danielecampogiani.ktmp"
         minSdkVersion(21)
