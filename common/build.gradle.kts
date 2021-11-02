@@ -8,7 +8,7 @@ plugins {
 group = "com.danielecampogiani.ktmp"
 version = "1.0-SNAPSHOT"
 
-val ktorVer = "1.6.4"
+val ktorVer = "1.6.5"
 val coroutinesVer = "1.3.8"
 val serializationVer = "1.3.0"
 
