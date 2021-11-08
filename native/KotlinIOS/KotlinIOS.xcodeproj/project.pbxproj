@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B8910CF2739AF1A008E52F2 /* common in Frameworks */ = {isa = PBXBuildFile; productRef = 2B8910CE2739AF1A008E52F2 /* common */; };
 		B65E7E982316E7DD00D15138 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65E7E972316E7DD00D15138 /* MainPresenter.swift */; };
 		B65E7E9A2316E7E700D15138 /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65E7E992316E7E700D15138 /* MainProtocols.swift */; };
 		B65E7E9C2316E86A00D15138 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65E7E9B2316E86A00D15138 /* MainViewController.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2BE98CFF2739AEB600D09FFB /* swiftpackage */ = {isa = PBXFileReference; lastKnownFileType = folder; name = swiftpackage; path = ../../common/swiftpackage; sourceTree = "<group>"; };
 		B65E7E972316E7DD00D15138 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		B65E7E992316E7E700D15138 /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
 		B65E7E9B2316E86A00D15138 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B8910CF2739AF1A008E52F2 /* common in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +81,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2BB6CCF22739A9AA008E1DED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2BE98CFE2739AEB600D09FFB /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				2BE98CFF2739AEB600D09FFB /* swiftpackage */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		B65E7E962316E7C700D15138 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,10 +109,12 @@
 		DEE1E13B22D680E1002F3437 = {
 			isa = PBXGroup;
 			children = (
+				2BE98CFE2739AEB600D09FFB /* Packages */,
 				DEE1E14622D680E2002F3437 /* KotlinIOS */,
 				DEE1E15B22D6811B002F3437 /* KotlinIOSTests */,
 				DEE1E16622D6811B002F3437 /* KotlinIOSUITests */,
 				DEE1E14522D680E2002F3437 /* Products */,
+				2BB6CCF22739A9AA008E1DED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +161,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXLegacyTarget section */
+		2B8910D02739B029008E52F2 /* generate-spm */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(PROJECT_DIR)/scripts/generate-spm.sh";
+			buildConfigurationList = 2B8910D12739B029008E52F2 /* Build configuration list for PBXLegacyTarget "generate-spm" */;
+			buildPhases = (
+			);
+			buildToolPath = /bin/bash;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = "generate-spm";
+			passBuildSettingsInEnvironment = 1;
+			productName = "generate-spm";
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		DEE1E14322D680E1002F3437 /* KotlinIOS */ = {
 			isa = PBXNativeTarget;
@@ -156,6 +193,9 @@
 			dependencies = (
 			);
 			name = KotlinIOS;
+			packageProductDependencies = (
+				2B8910CE2739AF1A008E52F2 /* common */,
+			);
 			productName = KotlinIOS;
 			productReference = DEE1E14422D680E2002F3437 /* KotlinIOS.app */;
 			productType = "com.apple.product-type.application";
@@ -206,6 +246,9 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Daniele Campogiani";
 				TargetAttributes = {
+					2B8910D02739B029008E52F2 = {
+						CreatedOnToolsVersion = 13.1;
+					};
 					DEE1E14322D680E1002F3437 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -232,6 +275,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				2B8910D02739B029008E52F2 /* generate-spm */,
 				DEE1E14322D680E1002F3437 /* KotlinIOS */,
 				DEE1E15722D6811B002F3437 /* KotlinIOSTests */,
 				DEE1E16222D6811B002F3437 /* KotlinIOSUITests */,
@@ -282,7 +326,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew :common:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew :common:createSwiftPackage\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -349,6 +393,35 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2B8910D22739B029008E52F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2B8910D32739B029008E52F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		DEE1E16A22D6811B002F3437 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -470,8 +543,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../common/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = KotlinIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -493,8 +566,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../common/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = KotlinIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -592,6 +665,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2B8910D12739B029008E52F2 /* Build configuration list for PBXLegacyTarget "generate-spm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B8910D22739B029008E52F2 /* Debug */,
+				2B8910D32739B029008E52F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DEE1E13F22D680E1002F3437 /* Build configuration list for PBXProject "KotlinIOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -629,6 +711,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2B8910CE2739AF1A008E52F2 /* common */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = common;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DEE1E13C22D680E1002F3437 /* Project object */;
 }

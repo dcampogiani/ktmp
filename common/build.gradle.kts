@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "1.5.31"
+    id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
 }
 
 group = "com.danielecampogiani.ktmp"
@@ -26,6 +27,13 @@ kotlin {
             framework {
                 baseName = "common"
             }
+        }
+    }
+    multiplatformSwiftPackage {
+        swiftToolsVersion("5.5")
+        packageName("common")
+        targetPlatforms {
+            iOS { v("15") }
         }
     }
 
