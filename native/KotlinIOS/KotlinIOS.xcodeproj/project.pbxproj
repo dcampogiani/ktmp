@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2B8910CF2739AF1A008E52F2 /* common in Frameworks */ = {isa = PBXBuildFile; productRef = 2B8910CE2739AF1A008E52F2 /* common */; };
 		B65E7E982316E7DD00D15138 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65E7E972316E7DD00D15138 /* MainPresenter.swift */; };
-		B65E7E9A2316E7E700D15138 /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65E7E992316E7E700D15138 /* MainProtocols.swift */; };
 		B65E7E9C2316E86A00D15138 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65E7E9B2316E86A00D15138 /* MainViewController.swift */; };
 		DEE1E14822D680E2002F3437 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1E14722D680E2002F3437 /* AppDelegate.swift */; };
 		DEE1E14D22D680E2002F3437 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEE1E14B22D680E2002F3437 /* Main.storyboard */; };
@@ -39,7 +38,6 @@
 /* Begin PBXFileReference section */
 		2BE98CFF2739AEB600D09FFB /* swiftpackage */ = {isa = PBXFileReference; lastKnownFileType = folder; name = swiftpackage; path = ../../common/swiftpackage; sourceTree = "<group>"; };
 		B65E7E972316E7DD00D15138 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
-		B65E7E992316E7E700D15138 /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
 		B65E7E9B2316E86A00D15138 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		DEE1E14422D680E2002F3437 /* KotlinIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE1E14722D680E2002F3437 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 			children = (
 				B65E7E9B2316E86A00D15138 /* MainViewController.swift */,
 				B65E7E972316E7DD00D15138 /* MainPresenter.swift */,
-				B65E7E992316E7E700D15138 /* MainProtocols.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -173,6 +170,8 @@
 			dependencies = (
 			);
 			name = "generate-spm";
+			packageProductDependencies = (
+			);
 			passBuildSettingsInEnvironment = 1;
 			productName = "generate-spm";
 		};
@@ -183,7 +182,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DEE1E16C22D6811B002F3437 /* Build configuration list for PBXNativeTarget "KotlinIOS" */;
 			buildPhases = (
-				DEE1E17922D6860B002F3437 /* ShellScript */,
 				DEE1E14022D680E1002F3437 /* Sources */,
 				DEE1E14122D680E1002F3437 /* Frameworks */,
 				DEE1E14222D680E1002F3437 /* Resources */,
@@ -271,6 +269,8 @@
 				Base,
 			);
 			mainGroup = DEE1E13B22D680E1002F3437;
+			packageReferences = (
+			);
 			productRefGroup = DEE1E14522D680E2002F3437 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -310,32 +310,11 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		DEE1E17922D6860B002F3437 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew :common:createSwiftPackage\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		DEE1E14022D680E1002F3437 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B65E7E9A2316E7E700D15138 /* MainProtocols.swift in Sources */,
 				B65E7E982316E7DD00D15138 /* MainPresenter.swift in Sources */,
 				DEE1E14822D680E2002F3437 /* AppDelegate.swift in Sources */,
 				B65E7E9C2316E86A00D15138 /* MainViewController.swift in Sources */,
@@ -473,7 +452,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -528,7 +507,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

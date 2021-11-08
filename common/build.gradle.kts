@@ -4,6 +4,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "1.5.31"
     id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
+    id("com.rickclephas.kmp.nativecoroutines") version "0.7.0"
 }
 
 group = "com.danielecampogiani.ktmp"

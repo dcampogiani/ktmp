@@ -1,37 +1,46 @@
 import Foundation
 import common
 
-struct MainPresenter: MainPresenterProtocol {
+@MainActor
+class MainPresenter: ObservableObject {
     private let api = Api()
-    private weak var view: MainViewProtocol?
-
-    init(view: MainViewProtocol?) {
-        self.view = view
-    }
+    
+    @Published private(set) var privateState: MainViewController.State = .loading
+    var state: Published<MainViewController.State>.Publisher { $privateState }
 
     func fetchFollowers() {
-        api
-            .getUser(userName: "gioevi90")
-            .flatMap(f: { self.api.getFollowers(url: $0.followersUrl) as! Request<AnyObject> })
-            .execute{ result, error in
-               if let e = error {
-                self.onFetchFollowersError(error: e.localizedDescription )
-               } else if let res = result{
-                res.fold(fe: { error in self.onFetchFollowersError(error: error.errorBody) },
-                fs: { success in self.onFetchFollowersSuccess(followers: success.body) })
-               }
-            }
+        Task {
+            await fetchFollowersAsync()
+        }
     }
 
+    func fetchFollowersAsync() async {
+        do {
+            try await api
+                .getUser(userName: "gioevi90")
+                .flatMap(f: { self.api.getFollowers(url: $0.followersUrl) as! Request<AnyObject> })
+                .execute()
+                .fold(fe: { self.onFetchFollowersError(error: $0.errorBody) },
+                      fs: { self.onFetchFollowersSuccess(followers: $0.body) })
+        } catch {
+            onFetchFollowersError(error: error.localizedDescription )
+        }
+    }
+    
     func onFetchFollowersSuccess(followers: AnyObject) {
-        (followers as? [User])
-            .map({ view?.showFollowers($0) })
+        privateState = .content(followers as? [User] ?? [])
     }
 
     func onFetchFollowersError(error: String) {
-        view?.showError(error)
+        privateState = .failure(error)
     }
 }
 
-
+extension MainViewController {
+    enum State {
+        case failure(String)
+        case content([User])
+        case loading
+    }
+}
 
