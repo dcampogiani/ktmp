@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Build with Gradle
-      run:
-        ./gradlew common:build app:testDebugUnitTest app:assembleDebug --console plain
+    - uses: burrunan/gradle-cache-action@v1
+      name: Build
+      with:
+        arguments: common:build app:testDebugUnitTest app:assembleDebug
+        gradle-version: wrapper
