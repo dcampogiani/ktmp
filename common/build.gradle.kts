@@ -50,7 +50,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-                implementation("io.mockk:mockk:1.13.5")
+                implementation("io.mockk:mockk:1.13.7")
 
             }
         }
