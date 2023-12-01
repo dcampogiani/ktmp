@@ -10,7 +10,7 @@ version = "1.0-SNAPSHOT"
 
 val ktorVer = "1.6.8"
 val coroutinesVer = "1.3.8"
-val serializationVer = "1.4.1"
+val serializationVer = "1.6.2"
 
 repositories {
     gradlePluginPortal()
